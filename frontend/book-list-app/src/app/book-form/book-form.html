@@ -1,0 +1,48 @@
+<div class="book-form-container">
+  <h2>Add New Book</h2>
+  
+  <div *ngIf="error" class="error">{{ error }}</div>
+  
+  <form (ngSubmit)="onSubmit()" #bookForm="ngForm">
+    <div class="form-group">
+      <label for="title">Title *</label>
+      <input type="text" id="title" name="title" [(ngModel)]="book.title" required class="form-control">
+    </div>
+    
+    <div class="form-group">
+      <label for="author">Author *</label>
+      <input type="text" id="author" name="author" [(ngModel)]="book.author" required class="form-control">
+    </div>
+    
+    <div class="form-group">
+      <label for="isbn">ISBN *</label>
+      <input type="text" id="isbn" name="isbn" [(ngModel)]="book.isbn" required class="form-control">
+    </div>
+    
+    <div class="form-group">
+      <label for="publishedDate">Published Date *</label>
+      <input type="date" id="publishedDate" name="publishedDate" [(ngModel)]="book.publishedDate" required class="form-control">
+    </div>
+    
+    <div class="form-group">
+      <label for="genre">Genre *</label>
+      <input type="text" id="genre" name="genre" [(ngModel)]="book.genre" required class="form-control">
+    </div>
+    
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" id="price" name="price" [(ngModel)]="book.price" step="0.01" min="0" class="form-control">
+    </div>
+    
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" [(ngModel)]="book.description" rows="4" class="form-control"></textarea>
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" [disabled]="!bookForm.valid || loading" class="btn btn-primary">
+        {{ loading ? 'Adding...' : 'Add Book' }}
+      </button>
+    </div>
+  </form>
+</div>

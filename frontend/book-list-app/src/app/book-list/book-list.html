@@ -1,0 +1,51 @@
+<div class="book-list-container">
+  <h2>📖 Books Collection</h2>
+  
+  <!-- Hidden file input -->
+  <input 
+    #fileInput 
+    type="file" 
+    accept=".pdf,.epub,.txt,.doc,.docx" 
+    (change)="onFileSelected($event)" 
+    style="display: none;"
+  />
+  
+  <div class="debug-info">
+    <strong>Debug:</strong> Loading = {{ loading }}, Error = {{ !!error }}, Books count = {{ books.length }}
+  </div>
+  
+  <div *ngIf="loading" class="loading">📚 Loading books...</div>
+  
+  <div *ngIf="error" class="error">❌ Error: {{ error }}</div>
+  
+  <div *ngIf="!loading && !error" class="books-grid">
+    <div *ngFor="let book of books" class="book-card">
+      <h3>{{ book.title }}</h3>
+      <p><strong>Author:</strong> {{ book.author }}</p>
+      <p><strong>Genre:</strong> {{ book.genre }}</p>
+      <p><strong>Price:</strong> ${{ book.price }}</p>
+      <p><strong>Published:</strong> {{ book.publishedDate | date:'shortDate' }}</p>
+      <p class="description">{{ book.description }}</p>
+      <div class="content-status">
+        <span *ngIf="book.contentLink" class="content-indicator">📄 Content Available</span>
+        <span *ngIf="!book.contentLink" class="no-content-indicator">📄 No Content</span>
+      </div>
+      <div class="book-actions">
+        <button class="btn btn-primary" *ngIf="!book.contentLink" (click)="selectFileForUpload(book.id)">
+          📤 Upload Content
+        </button>
+        <button class="btn btn-secondary" *ngIf="book.contentLink" (click)="downloadContent(book.id)">
+          📥 Download
+        </button>
+        <button class="btn btn-warning" *ngIf="book.contentLink" (click)="deleteContent(book.id)">
+          🗑️ Remove Content
+        </button>
+        <button class="btn btn-danger" (click)="deleteBook(book.id)">🗑️ Delete Book</button>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="!loading && !error && books.length === 0" class="no-books">
+    📚 No books found. Books will be automatically loaded when the backend starts.
+  </div>
+</div>
