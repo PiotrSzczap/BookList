@@ -32,13 +32,16 @@ if (string.IsNullOrEmpty(blobConnectionString))
 builder.Services.AddSingleton(x => new BlobServiceClient(blobConnectionString));
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 
+// Add health checks
+builder.Services.AddHealthChecks();
+
 // Add CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200", "http://localhost:4201")
+            policy.WithOrigins("http://localhost:4200", "http://localhost:4201", "http://localhost:80", "http://frontend")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -63,6 +66,9 @@ app.UseHttpsRedirection();
 
 // Use CORS
 app.UseCors("AllowAngularApp");
+
+// Map health checks
+app.MapHealthChecks("/health");
 
 // Map controllers
 app.MapControllers();
