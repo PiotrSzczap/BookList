@@ -76,8 +76,8 @@ jobs:
       - name: Deploy to AKS
         run: |
           # Update image tags in deployment files
-          sed -i "s|booklistregistry2617.azurecr.io/booklist-api:latest|${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/booklist-api:${{ github.sha }}|g" k8s/deployment.yaml
-          sed -i "s|booklistregistry2617.azurecr.io/booklist-frontend:latest|${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/booklist-frontend:${{ github.sha }}|g" k8s/deployment.yaml
+          sed -i "s|booklistregistry2617.azurecr.io/booklist-api:latest|${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/booklist-api:${{ github.sha }}|g" k8s/01-backend-deployment.yaml
+          sed -i "s|booklistregistry2617.azurecr.io/booklist-frontend:latest|${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/booklist-frontend:${{ github.sha }}|g" k8s/02-frontend-deployment.yaml
           
           # Apply all manifests
           kubectl apply -f k8s/ -n ${{ env.NAMESPACE }}
