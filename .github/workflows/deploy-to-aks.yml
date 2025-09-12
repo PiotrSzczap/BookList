@@ -19,7 +19,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Docker Buildx
-        id: buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Login to Azure Container Registry
@@ -37,7 +36,6 @@ jobs:
           tags: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/booklist-api:latest
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/booklist-api:${{ github.sha }}
-          builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -49,7 +47,6 @@ jobs:
           tags: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/booklist-frontend:latest
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/booklist-frontend:${{ github.sha }}
-          builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
