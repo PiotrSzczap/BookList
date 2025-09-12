@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:alpine AS runtime
 
 # Copy the built Angular app from the build stage to Nginx's html directory
-COPY --from=build /app/dist/book-list-app /usr/share/nginx/html
+COPY --from=build /app/dist/book-list-app/browser /usr/share/nginx/html
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
