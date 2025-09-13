@@ -70,7 +70,9 @@ jobs:
         run: |
           kubectl delete secret booklist-secrets -n ${{ env.NAMESPACE }} --ignore-not-found
           kubectl create secret generic booklist-secrets \
-            --from-literal=connection-string="${{ secrets.CONNECTION_STRING }}" \
+            --from-literal=cosmos-db-connection="${{ secrets.COSMOS_DB_CONNECTION_STRING }}" \
+            --from-literal=blob-storage-connection="${{ secrets.BLOB_STORAGE_CONNECTION_STRING }}" \
+            --from-literal=connection-string="" \
             -n ${{ env.NAMESPACE }}
 
       - name: Deploy to AKS
